@@ -1,7 +1,22 @@
+# Python virtual environments
 venv/
+.venv/
+
+# Compiled Python files
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+
+# System files
 .DS_Store
-.vscode/
+Thumbs.db
+
+# PyCharm settings
+.idea/
+
+# Build-related files (optional, for Android or Buildozer)
+*.apk
+*.spec
+build/
+dist/

@@ -1,0 +1,51 @@
+WindowManager:
+    HomeScreen:
+    HistoryScreen:
+
+<HomeScreen>:
+    name: "home"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Home Screen"
+            font_size: 28
+
+        Button:
+            text: "Start Cleaning"
+            font_size: 24
+            size_hint_y: None
+            height: 80
+            on_release: root.start_cleaning()
+
+        Label:
+            id: response_label
+            text: "Waiting for status..."
+            font_size: 18
+
+        Button:
+            text: "Go to History"
+            size_hint_y: None
+            height: 60
+            on_release:
+                app.root.current = "history"
+
+<HistoryScreen>:
+    name: "history"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "History Screen"
+            font_size: 28
+
+        Button:
+            text: "Back to Home"
+            size_hint_y: None
+            height: 60
+            on_release:
+                app.root.current = "home"

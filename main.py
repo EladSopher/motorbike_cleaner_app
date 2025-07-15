@@ -1,7 +1,9 @@
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager
 from screens.home_screen import HomeScreen
 from screens.history_screen import HistoryScreen
+from screens.status_screen import StatusScreen
+from utils.history_log import HistoryLog
 
 class WindowManager(ScreenManager):
     pass
@@ -11,9 +13,11 @@ Builder.load_file("ui/widgets.kv")
 
 class MotorbikeApp(App):
     def build(self):
+        self.history = HistoryLog()
         sm = WindowManager()
-        sm.add_widget(HomeScreen(name="home"))
-        sm.add_widget(HistoryScreen(name="history"))
+        sm.add_widget(HomeScreen(name="home", history=self.history))
+        sm.add_widget(StatusScreen(name="status"))
+        sm.add_widget(HistoryScreen(name="history", history=self.history))
         return sm
 
 if __name__ == '__main__':

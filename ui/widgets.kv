@@ -1,6 +1,7 @@
 WindowManager:
     HomeScreen:
     HistoryScreen:
+    StatusScreen:
 
 <HomeScreen>:
     name: "home"
@@ -20,10 +21,30 @@ WindowManager:
             height: 80
             on_release: root.start_cleaning()
 
+        Button:
+            text: "Start Oiling"
+            font_size: 20
+            size_hint_y: None
+            height: 60
+            on_release: root.simulate_oiling()
+
+        Button:
+            text: "Simulate Error"
+            font_size: 20
+            size_hint_y: None
+            height: 60
+            on_release: root.start_error("error_low_water", "Simulated error: Water too low")
+
         Label:
             id: response_label
             text: "Waiting for status..."
             font_size: 18
+
+        Button:
+            text: "Go to Status"
+            size_hint_y: None
+            height: 60
+            on_release: app.root.current = "status"
 
         Button:
             text: "Go to History"
@@ -37,11 +58,34 @@ WindowManager:
     BoxLayout:
         orientation: "vertical"
         padding: 20
-        spacing: 20
+        spacing: 10
 
-        Label:
-            text: "History Screen"
-            font_size: 28
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+            Button:
+                text: "All"
+                on_release: root.set_filter("all")
+            Button:
+                text: "Cleaning"
+                on_release: root.set_filter("cleaning")
+            Button:
+                text: "Oiling"
+                on_release: root.set_filter("oiling")
+            Button:
+                text: "Errors"
+                on_release: root.set_filter("error")
+
+        ScrollView:
+            GridLayout:
+                id: log_box
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 30
+                spacing: 5
 
         Button:
             text: "Back to Home"
@@ -49,3 +93,34 @@ WindowManager:
             height: 60
             on_release:
                 app.root.current = "home"
+
+<StatusScreen>:
+    name: "status"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        Label:
+            id: water_label
+            text: "Water Level: --"
+            font_size: 22
+            markup: True
+
+        Label:
+            id: speed_label
+            text: "Speed: --"
+            font_size: 22
+            markup: True
+
+        Button:
+            text: "Refresh Status"
+            size_hint_y: None
+            height: 60
+            on_release: root.refresh_status()
+
+        Button:
+            text: "Back to Home"
+            size_hint_y: None
+            height: 60
+            on_release: app.root.current = "home"

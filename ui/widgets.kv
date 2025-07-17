@@ -7,26 +7,28 @@ WindowManager:
     name: "home"
     BoxLayout:
         orientation: "vertical"
-        padding: 20
+        padding: [20, 40]
         spacing: 20
 
         Label:
-            text: "Home Screen"
+            text: "Motorbike Chain System"
             font_size: 28
+            size_hint_y: None
+            height: 50
 
         Button:
             text: "Start Cleaning"
-            font_size: 24
+            font_size: 22
             size_hint_y: None
-            height: 80
+            height: 70
             on_release: root.start_cleaning()
 
         Button:
             text: "Start Oiling"
-            font_size: 20
+            font_size: 22
             size_hint_y: None
-            height: 60
-            on_release: root.simulate_oiling()
+            height: 70
+            on_release: root.start_oiling()
 
         Button:
             text: "Simulate Error"
@@ -35,30 +37,33 @@ WindowManager:
             height: 60
             on_release: root.start_error("error_low_water", "Simulated error: Water too low")
 
-        Label:
-            id: response_label
-            text: "Waiting for status..."
-            font_size: 18
+        Button:
+            text: "Go to History"
+            font_size: 20
+            size_hint_y: None
+            height: 60
+            on_release: app.root.current = "history"
 
         Button:
             text: "Go to Status"
+            font_size: 20
             size_hint_y: None
             height: 60
             on_release: app.root.current = "status"
 
-        Button:
-            text: "Go to History"
+        Label:
+            id: response_label
+            text: "Waiting for status..."
+            font_size: 16
             size_hint_y: None
-            height: 60
-            on_release:
-                app.root.current = "history"
+            height: 40
 
 <HistoryScreen>:
     name: "history"
     BoxLayout:
         orientation: "vertical"
-        padding: 20
-        spacing: 10
+        padding: [20, 30]
+        spacing: 20
 
         BoxLayout:
             size_hint_y: None
@@ -79,6 +84,7 @@ WindowManager:
                 on_release: root.set_filter("error")
 
         ScrollView:
+            size_hint_y: 1
             GridLayout:
                 id: log_box
                 cols: 1
@@ -87,18 +93,36 @@ WindowManager:
                 row_default_height: 30
                 spacing: 5
 
+        Label:
+            id: export_status
+            text: ""
+            font_size: 14
+            size_hint_y: None
+            height: 30
+
+        Button:
+            text: "Clear History"
+            size_hint_y: None
+            height: 50
+            on_release: root.clear_log()
+
+        Button:
+            text: "Export History to CSV"
+            size_hint_y: None
+            height: 50
+            on_release: root.export_log_to_csv()
+
         Button:
             text: "Back to Home"
             size_hint_y: None
             height: 60
-            on_release:
-                app.root.current = "home"
+            on_release: app.root.current = "home"
 
 <StatusScreen>:
     name: "status"
     BoxLayout:
         orientation: "vertical"
-        padding: 20
+        padding: [20, 30]
         spacing: 20
 
         Label:
@@ -106,18 +130,19 @@ WindowManager:
             text: "Water Level: --"
             font_size: 22
             markup: True
+            size_hint_y: None
+            height: 60
 
         Label:
             id: speed_label
             text: "Speed: --"
             font_size: 22
             markup: True
-
-        Button:
-            text: "Refresh Status"
             size_hint_y: None
             height: 60
-            on_release: root.refresh_status()
+
+        Widget:  # Fills the rest of the space
+            size_hint_y: 1
 
         Button:
             text: "Back to Home"

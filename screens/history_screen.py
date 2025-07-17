@@ -1,5 +1,9 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+
 
 class HistoryScreen(Screen):
     def __init__(self, history=None, **kwargs):
@@ -9,6 +13,7 @@ class HistoryScreen(Screen):
 
     def on_pre_enter(self):
         self.update_log_display()
+        self.ids.export_status.text = ""  # ✅ clear status when entering
 
     def set_filter(self, filter_type):
         self.current_filter = filter_type
@@ -47,3 +52,35 @@ class HistoryScreen(Screen):
                     markup=True  # enable color markup
                 )
             )
+
+    def export_log_to_csv(self):
+        filepath = self.history.export_to_csv()
+        self.ids.export_status.text = f"Exported to: {filepath}"
+
+    def clear_log(self):
+        # Inner function: called if user confirms
+        def confirm_clear(instance):
+            self.history.clear_history()
+            self.update_log_display()
+            self.ids.export_status.text = "History cleared."
+            popup.dismiss()
+
+        # Inner function: cancel action
+        def cancel(instance):
+            popup.dismiss()
+
+        # Create popup content
+        layout = BoxLayout(orientation='vertical', spacing=10, padding=20)
+        layout.add_widget(Label(text="Are you sure you want to clear the history?"))
+
+        buttons = BoxLayout(spacing=10, size_hint_y=None, height=50)
+        btn_cancel = Button(text="Cancel", on_release=cancel)
+        btn_clear = Button(text="Clear", on_release=confirm_clear)
+        buttons.add_widget(btn_cancel)
+        buttons.add_widget(btn_clear)
+
+        layout.add_widget(buttons)
+
+        popup = Popup(title="Confirm Clear", content=layout,
+                      size_hint=(None, None), size=(400, 200))
+        popup.open()

@@ -42,7 +42,7 @@ class HomeScreen(Screen):
         self.ids.response_label.text = "Oiling in progress..."
         response = "Simulated oiling cycle complete"
         self.bt.disconnect()
-        Clock.schedule_once(lambda dt: self._show_oiling_final_response(response, "oiling"), 2)
+        Clock.schedule_once(lambda dt: self._show_final_response(response, "oiling"), 2)
 
     def _show_final_response(self, response, action_type):
         self.ids.response_label.text = response

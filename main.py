@@ -4,6 +4,8 @@ from screens.home_screen import HomeScreen
 from screens.history_screen import HistoryScreen
 from screens.status_screen import StatusScreen
 from utils.history_log import HistoryLog
+from kivy.core.window import Window
+Window.size = (360, 640)  # Simulate typical phone screen (in dp)
 
 class WindowManager(ScreenManager):
     pass

@@ -5,11 +5,18 @@ import random
 class StatusScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.refresh_event = None  # Keep reference to auto-updater
 
     def on_pre_enter(self):
         self.refresh_status()
+        self.refresh_event = Clock.schedule_interval(self.refresh_status, 1)
 
-    def refresh_status(self):
+    def on_leave(self):
+        if self.refresh_event:
+            self.refresh_event.cancel()
+            self.refresh_event = None
+
+    def refresh_status(self, *args):
         # Simulated sensor values
         water_level = random.randint(0, 100)  # in mL
         speed = random.randint(0, 40)         # in km/h

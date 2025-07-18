@@ -3,12 +3,14 @@ from kivy.uix.screenmanager import ScreenManager
 from screens.home_screen import HomeScreen
 from screens.history_screen import HistoryScreen
 from screens.status_screen import StatusScreen
+from kivy.uix.screenmanager import ScreenManager, FadeTransition, SlideTransition, SwapTransition
 from utils.history_log import HistoryLog
 from kivy.core.window import Window
 Window.size = (360, 640)  # Simulate typical phone screen (in dp)
 
 class WindowManager(ScreenManager):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(transition=SlideTransition(direction='left'), **kwargs)
 
 from kivy.lang import Builder
 Builder.load_file("ui/widgets.kv")

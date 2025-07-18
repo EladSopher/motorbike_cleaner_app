@@ -38,18 +38,22 @@ WindowManager:
             on_release: root.start_error("error_low_water", "Simulated error: Water too low")
 
         Button:
-            text: "Go to History"
+            text: "History"
             font_size: 20
             size_hint_y: None
             height: 60
-            on_release: app.root.current = "history"
+            on_release:
+                app.root.transition.direction = "left"
+                app.root.current = "history"
 
         Button:
-            text: "Go to Status"
+            text: "Status"
             font_size: 20
             size_hint_y: None
             height: 60
-            on_release: app.root.current = "status"
+            on_release:
+                app.root.transition.direction = "left"
+                app.root.current = "status"
 
         Label:
             id: response_label
@@ -116,7 +120,9 @@ WindowManager:
             text: "Back to Home"
             size_hint_y: None
             height: 60
-            on_release: app.root.current = "home"
+            on_release:
+                app.root.transition.direction = "right"
+                app.root.current = "home"
 
 <StatusScreen>:
     name: "status"
@@ -148,4 +154,6 @@ WindowManager:
             text: "Back to Home"
             size_hint_y: None
             height: 60
-            on_release: app.root.current = "home"
+            on_release:
+                app.root.transition.direction = "right"
+                app.root.current = "home"

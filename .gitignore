@@ -1,22 +1,48 @@
-# Python virtual environments
-venv/
-.venv/
-
-# Compiled Python files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+ENV/
+venv/
+
+# Buildozer and Android build artifacts
+bin/
+build/
+*.apk
+*.pyc
 *.pyo
 *.pyd
+*.log
 
-# System files
+# Kivy logs and state
+.kivy/
+.kv/
+*.pyo
+
+# macOS and Windows system files
 .DS_Store
 Thumbs.db
 
-# PyCharm settings
+# Editor and IDE settings
+.vscode/
 .idea/
 
-# Build-related files (optional, for Android or Buildozer)
-*.apk
-*.spec
-build/
-dist/
+# History logs
+*.json
+
+# GitHub Actions artifacts (optional)
+*.zip
+*.tar.gz
+
+# Node/npm (if added in future)
+node_modules/
+package-lock.json
+
+# Ignore private keys or credentials
+*.keystore
+*.pem
+*.jks

@@ -66,6 +66,10 @@ jobs:
           warn_on_root = 1
           EOF
 
+      - name: Manually set correct NDK URL
+        run: |
+          sed -i 's|r25bW-linux.zip|r25b-linux.zip|g' $(grep -rl 'r25bW-linux.zip' .buildozer)
+
       - name: Build APK
         run: buildozer android debug
 

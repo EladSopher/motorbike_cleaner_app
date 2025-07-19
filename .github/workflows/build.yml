@@ -23,23 +23,23 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git zip unzip openjdk-17-jdk python3-pip python3-setuptools python3-wheel python3-venv \
-            build-essential ccache libncurses5 libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev \
-            libpng-dev libfreetype6-dev liblcms2-dev libblas-dev liblapack-dev libatlas-base-dev \
-            libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-            libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
-            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
-            libmtdev-dev xclip xsel libgl1-mesa-dev libgles2-mesa-dev \
-            libopencv-dev libusb-dev libxtst-dev libyaml-dev
+              build-essential ccache libncurses5 libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev \
+              libpng-dev libfreetype6-dev liblcms2-dev libblas-dev liblapack-dev libatlas-base-dev \
+              libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+              libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
+              libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+              libmtdev-dev xclip xsel libgl1-mesa-dev libgles2-mesa-dev \
+              libopencv-dev libusb-dev libxtst-dev libyaml-dev
           python3 -m pip install --upgrade pip
           pip install buildozer cython==0.29.36
 
       - name: Initialize Buildozer
-        run: buildozer init
+        run: |
+          buildozer init
 
       - name: Replace buildozer.spec with custom settings
         run: |
-          cat <<EOF > buildozer.spec
-          [app]
+          echo "[app]
           title = Motorbike Cleaner
           package.name = motorbikecleaner
           package.domain = org.eladsopher
@@ -48,21 +48,21 @@ jobs:
           version = 0.1
           requirements = python3,kivy
           orientation = portrait
+          osx.python_version = 3
           fullscreen = 1
           android.permissions = BLUETOOTH,BLUETOOTH_ADMIN,INTERNET,ACCESS_NETWORK_STATE
           android.api = 31
           android.minapi = 21
           android.sdk = 24
           android.ndk = 23b
+          android.ndk_path = $HOME/.buildozer/android/platform/android-ndk-r23b
           android.arch = armeabi-v7a
           android.debug = 1
           log_level = 2
 
           [buildozer]
           log_level = 2
-          warn_on_root = 1
-          EOF
-      
+          warn_on_root = 1" > buildozer.spec
 
       - name: Build APK
         run: buildozer android debug

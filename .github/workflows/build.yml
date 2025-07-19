@@ -39,7 +39,8 @@ jobs:
 
       - name: Replace buildozer.spec with custom settings
         run: |
-          echo "[app]
+          cat <<EOF > buildozer.spec
+          [app]
           title = Motorbike Cleaner
           package.name = motorbikecleaner
           package.domain = org.eladsopher
@@ -55,14 +56,15 @@ jobs:
           android.minapi = 21
           android.sdk = 24
           android.ndk = 23b
-          android.ndk_path = $HOME/.buildozer/android/platform/android-ndk-r23b
+          android.ndk_path = \$HOME/.buildozer/android/platform/android-ndk-r23b
           android.arch = armeabi-v7a
           android.debug = 1
           log_level = 2
-
+          
           [buildozer]
           log_level = 2
-          warn_on_root = 1" > buildozer.spec
+          warn_on_root = 1
+          EOF
 
       - name: Build APK
         run: buildozer android debug
